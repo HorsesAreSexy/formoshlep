@@ -16,8 +16,11 @@
       </div>
       <img :src="(item.mare ? mares[item.mare].vector : 'wt') + '.png'" class="vector">
     </div>
-    <div class="add" @click="addMare">
+    <div class="button" @click="addMare">
       Добавить кобылочку
+    </div>
+    <div class="button" @click="sendToServer">
+      Получить с доставкой
     </div>
   </div>
 </template>
@@ -82,6 +85,16 @@ export default {
   methods: {
     addMare () {
       this.selects.push({})
+    },
+    sendToServer () {
+      fetch('equestria/canterlot/princess_celestia', {
+        method: 'POST',
+        body: JSON.stringify(this.selects),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      // ну типа отправил, вот
     }
   }
 }
@@ -109,7 +122,7 @@ export default {
     transform: translateY(-50%);
   }
 }
-.add{
+.button{
   border: 6px solid orange;
   border-radius: 10px;
   padding: 10px 20px;
@@ -121,5 +134,10 @@ export default {
   display: inline-block;
   margin-bottom: 100px;
   cursor: pointer;
+  &:last-of-type{
+    float: right;
+    border-color: green;
+    background: rgba(21, 255, 0, 0.2);
+  }
 }
 </style>
